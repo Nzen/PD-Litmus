@@ -1,0 +1,26 @@
+
+	'semantic' highlight
+emit boring lines
+grab all the lines within <code>
+mark all the non keywords a different color, keeping a list of the colors.
+emit the new node
+ (consider reading the whole document to map all the unreserved, in case some inlines or multiple blocks.)
+
+  color spaces
+rgb cmyk hsv cielab
+color translation
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
