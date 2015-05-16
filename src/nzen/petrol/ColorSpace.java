@@ -30,8 +30,12 @@ public class ColorSpace {
         start with a verboten color instead?
         starting with minVP
 
-		yeah, give it a background color, eventually 7_7
-		test this internally.
+        yeah, give it a background color, eventually 7_7
+        test this internally.
+
+     * todo:
+    finish download/code/bislice.py to walk the rgb
+    find matrix transform btwx ciexyz/lab & rgb
     */
 
     /* IMPROVE later change this to some real color walk */

@@ -13,7 +13,13 @@ public class LitmusFrame {
         hand transmix to litmus
         write transmix to files
 
-		run all the internal tests from here. use junit or something like an adult
+        run all the internal tests from here. use junit or something like an adult
+
+         * todo:
+        send html content with <code>
+        read a file into transmix
+        receive test results
+        print output from transmix
         */
         LitmusFrame representsPd = new LitmusFrame();
     }
@@ -32,7 +38,7 @@ public class LitmusFrame {
         java.util.LinkedList<Transmix> hierarchy = new java.util.LinkedList<>();
         hierarchy.add(new Transmix( "C:\\users\\Nzen\\Downloads", allcaps ));
 
-        Litmus semanticColor = new Litmus( "Java" );
+        Litmus semanticColor = new Litmus();
         hierarchy = semanticColor.stain( hierarchy );
 
         // visually inspect

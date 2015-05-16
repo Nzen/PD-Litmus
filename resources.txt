@@ -1,3 +1,7 @@
+ registers
+http://www.sciencedirect.com/science/article/pii/0096055181900485	register coloring
+http://en.wikipedia.org/wiki/Global_graph_coloring_register_allocation
+http://en.wikipedia.org/wiki/Graph_coloring
 
 	'semantic' highlight
 emit boring lines
@@ -5,12 +9,25 @@ grab all the lines within <code>
 mark all the non keywords a different color, keeping a list of the colors.
 emit the new node
  (consider reading the whole document to map all the unreserved, in case some inlines or multiple blocks.)
+-
+https://bitbucket.org/birkenfeld/pygments-mainbirkenfeld
+https://github.com/danieldk/quzah	a small Java library for generating RGB color sets for categorical data
 
   color spaces
 rgb cmyk hsv cielab
 color translation
+-
+http://www.husl-colors.org/	(this is the color one that promises color perceptual distance)
+http://vis4.net/blog/posts/avoid-equidistant-hsv-colors/
+http://en.wikipedia.org/wiki/HSL_color_space
+https://github.com/santosh/highlightr
+http://pltts.me/ 	(sample palettes)
+https://news.ycombinator.com/item?id=7560341	(about colormoo, but lots of links)
 
-
+  languages I'll need
+java, python, javascript, C++, prolog, MIPS assembly, html, css, sql, clisp
+https://github.com/antlr/grammars-v4
+https://github.com/grammarware/slps/tree/master/topics/grammars
 
 
 

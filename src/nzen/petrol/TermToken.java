@@ -7,10 +7,12 @@ package nzen.petrol;
  */
 public class TermToken {
     String token;
-    boolean isTerminal;
+    boolean nonTerminal;
+    public static final boolean variable = true;
+    public static final boolean literal = false;
 
     public TermToken( String chit, boolean termitude ) {
         token = chit;
-        isTerminal = termitude;
+        nonTerminal = termitude;
     }
 }

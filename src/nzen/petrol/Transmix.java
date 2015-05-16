@@ -12,30 +12,33 @@ import java.util.LinkedList;
 public class Transmix {
     /*
     pd will give a ll of Transmix structs to the plugin. order is irrelevant.
-	insertion and removal are important.
-	searching can be accommodated with smaller groups (ex for templates-posts)
+    insertion and removal are important.
+    searching can be accommodated with smaller groups (ex for templates-posts)
 
     should I use their maps (hash/tree) or make/copy a trie ?
 
     path / filepath
     map of ll< str > attributes (ex tags)
     content
+
+     * todo:
+    switch to nio.Path
+    (profile the memory use on all this)
     */
 
-	public String filePath; // use Path instead?
-	public HashMap<String,LinkedList<String>> attributes;
-	private String content;
+    public String filePath; // IMPROVE use Path instead
+    public HashMap<String,LinkedList<String>> attributes;
+    private String content;
 
-	public Transmix() {
-		this( "","" );
-	}
+    public Transmix() {
+        this( "","" );
+    }
 
-	public Transmix( String fPath, String stuff ) {
-		filePath = fPath;
-		content = stuff;
-		// attributeS = new Map<String,String>();
-		// attributeL = new Map<String,LinkedList<String>>();
-	}
+    public Transmix( String fPath, String stuff ) {
+        filePath = fPath;
+        content = stuff;
+        attributes = new HashMap<String,LinkedList<String>>();
+    }
 
         public String gContent() {
             return content;
@@ -55,14 +58,14 @@ public class Transmix {
         }
 
         public LinkedList get( String attr ) {
-		return attributes.get( attr );
-	}
+        return attributes.get( attr );
+    }
 
         public void set( String attr, LinkedList<String> val ) {
             attributes.put( attr, val );
         }
 
-        // sugar, in case I don't feel like it later
+        // sugar, in case I don't feel like it later; ie wrap a single value in a ll
         public void setWrap( String attr, String val ) {
             LinkedList<String> wrap = new LinkedList<>();
             wrap.add( val );

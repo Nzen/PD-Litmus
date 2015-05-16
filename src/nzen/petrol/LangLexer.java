@@ -1,6 +1,8 @@
 
 package nzen.petrol;
 
+import java.util.LinkedList;
+
 /**
  * @author Nzen
  */
@@ -10,77 +12,99 @@ public class LangLexer implements Iterable< TermToken > {
     terminal means string, number, operator, reserved word, comment span, etc
     otherwise, it should be a variable. add environment variables if you don't want to see them
 
-    it doesn't really matter what type of terminal it is.
-    this is a distinct object because there are many languages: java jscript, c++
-
-    whoops, lang needs to lex, not just regex to handle
+    handle
         if(this.isAwesome(3)){return "I love you";}
-    hence litmus can't split words anymore
 
-	load this with the whole code block
-	then the client can iterate through the tokens
-	output str_bool of {token ; isTerminal}
-	minVP: spaces are terminal, everything else is non
+    span pairs : "" /_* *_/ // \n
+    all white space?
+    numbers (but also 0.6d )
+    reserved words
+    - I could read a json for these
+    > fsm states: unsure | span | boring | var
 
+     * todo:
+    X? move lexing into the langLexer from the lexanalysis iterator
+    use hard regex for java & syntax parsing
+    use a config file to select/construct regex
+    make a parser strategy for each supported language
     */
     private String code; // FIX to an array or list of termtokens
-
-    public LangLexer( String codeBlock, String ebnf ) {
-        /*
-        build a lexer thing from the ebnf
-        apply to code block
-        supply to lexanalysis
-        let them extract what they need
-        */
-        code = codeBlock;
-    }
+    private LinkedList<TermToken> tokenStream;
+    private final String targetLang;
+    private final String[] lexable;
 
     public LangLexer( String ebnf ) {
-        
+        targetLang = ebnf;
+        // If I get something I don't understand, just
+        lexable = new String[] { "threeChar", "" }; // or use config
     }
 
+    public String amFor() { return targetLang; }
+
+    // to choose the prep strategy
+    public boolean checkLang() {
+        boolean foundIt = true;
+        for ( String lang : lexable ) {
+            if (lang.equals( targetLang ))
+                return foundIt;
+        } // else
+        return ! foundIt;
+    }
+
+    // this is also how to restart it
     public boolean prep( String codeBlock ) {
         // if ebnf is null return false
         code = codeBlock;
+
+        tokenStream = new LinkedList<>();
+        if ( checkLang() )
+            return deferTo( codeBlock );
+        else
+            return noColorAtAll( codeBlock );
+    }
+
+    private boolean deferTo( String codeBlock ) { // IMPROVE rename?
+        switch( targetLang ) {
+        default:
+        case "": {
+            noColorAtAll( codeBlock );
+         } case "threeChar" : {
+             everyThreeCharAlternating( codeBlock );
+         }
+        }
         return true; // UNREADY
+    }
+
+    // 4TESTS replace this with the lexing. this just does whatever for mvp
+    private void everyThreeCharAlternating( String codeBlock ) {
+        for ( int ind = 0; ind < codeBlock.length() -3; ind += 3 ) {
+            tokenStream.add(
+                new TermToken(
+                    codeBlock.substring(ind, ind +3), (ind & 1) >0 // to vary color
+            )   );
+        }
+        // capture final characters
+        tokenStream.add(
+            new TermToken(
+                codeBlock.substring(
+                    codeBlock.length() -3, codeBlock.length() -1),
+                TermToken.variable
+        )   );
+    }
+
+    /*doesn't color anything. called for missing / unrecognized languages*/
+    public boolean noColorAtAll( String codeBlock ) {
+        tokenStream.add(
+            new TermToken(
+                codeBlock, TermToken.literal
+        )   );
+        return true; // yeah, worked, whatever
     }
 
     @Override
     public java.util.Iterator< TermToken > iterator() {
-        return new LexAnalysis( code );
+        return tokenStream.iterator();
     }
 
-    private class LexAnalysis implements java.util.Iterator< TermToken > {
-        String aSyTree; // data type will change, this is just to cut the red highlight
-        int pointingAt;
-        public LexAnalysis( String ast ) {
-            aSyTree = ast;
-            pointingAt = 0;
-        }
-	
-        @Override
-        public boolean hasNext() {
-                return pointingAt < aSyTree.length();
-        }
 
-        @Override
-        // FIX this needs to iterate through some array or list of term tokens, not do this mvp
-        public TermToken next() {
-            int end;
-            int colorBit = pointingAt & 1; // even?
-            pointingAt += 3;
-            if ( pointingAt < aSyTree.length() )
-                end = pointingAt;
-            else
-                end = aSyTree.length() -1; // NOTE likely overlap: this is a hack until real iteration
-            return new TermToken(
-                    aSyTree.substring( end -2, end +1 ),
-                    true);//colorBit > 0);
-        }
-
-        @Override
-        public void remove() {
-                throw new UnsupportedOperationException();
-        }
-    }
 }
