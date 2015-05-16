@@ -5,6 +5,8 @@ This is a little text filter that puts colored spans around nonterminal words wi
 
 This currently has prototypical behavior. The color is set by sine waves along RGB, the spans go around every three characters, and so on. Eventually, I intend to walk the LAB colorspace to color the variables in a couple languages I use.
 
+MIT License 2015, as described at http://choosealicense.com/licenses/mit/
+
 ### Todo (14 May)
 
 * LitmusFrame: build transmix from a file
