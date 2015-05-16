@@ -1,0 +1,28 @@
+
+Mar? conception
+Mar 30, began typing with netbeans, called Chromatograph
+Apr 17, minimum viable project: sine waves per rgb, colors per 3 chars, every time, on hard strings in litmusFrame, output as html hostable on w3schools.
+
+May 5, (& earlier) made bislice.py to simulate the color value choosing algorithm. (Matrix conversion to ciexyz will make it more difficult. But, the only other way to justify taking linear algebra is graphical programming :) Moved from stack based walk to queue/depth based. Not hitting every element yet.
+
+ May 15
+Should plugins have a messaging channel so each one doesn't need to reimplement that? But as soon as this has several threads, that's going to either make plugins less appealing to write (as they have to be concurrency aware) or require a bureaucratic system of a concurrent intermediary that may drop messages or whatever.
+
+I keep telling myself that, as a compiler plugin rather than a text editor plugin, I have the luxury of making as many passes as I need. Sure, it's cool to think that I can do this all in one pass, but it may ease my load if I don't need to. Just look at how much work I have for _this plugin_. To be fair, it is a complicated plugin. Obviously, a drafts plugin is much easier. Sure, but what about PDistillery, when it's asynchronous? Sure, but what about reimplementing Toffee templating in Java? Sure, but what about wrapping someone else's markdown library?
+
+Oh, I was sort of going for "I can spend memory wildly, but let's not go crazy". I lost track. Anyway, all that was about implementing a trie to search the reserved words. I keep thinking "um, dude, use a hashset" but then I remember that I'm not looking a character at a time. But should I use FakeTrie from the automata class (optimized a bit better)? Were those assumed to be spaced out? Maybe. Patricia trie? Burst trie?
+
+I realized that configuring LangLexer needn't be too hard: a json of comment pairs (including strings), operators, keywords, and number formats may be enough. Is there a language that treats whitespace differently, besides off-side scoping (python)? I think what you are asking is whether there is a language that can use whitespace as a nonterminal. No Nicholas, I don't know of a language that does that. Even the bf-esque esolang that uses whitespace as operators doesn't count because operators are literals. Remember the fsm states: notSure, boring, & oohYeah. I just keep appending different boring pieces until I get to something I don't recognize. The particular state within boring is up to FakeTrie to track.
+
+
+
+
+
+
+
+
+
+
+
+
+
