@@ -14,6 +14,28 @@ Oh, I was sort of going for "I can spend memory wildly, but let's not go crazy".
 
 I realized that configuring LangLexer needn't be too hard: a json of comment pairs (including strings), operators, keywords, and number formats may be enough. Is there a language that treats whitespace differently, besides off-side scoping (python)? I think what you are asking is whether there is a language that can use whitespace as a nonterminal. No Nicholas, I don't know of a language that does that. Even the bf-esque esolang that uses whitespace as operators doesn't count because operators are literals. Remember the fsm states: notSure, boring, & oohYeah. I just keep appending different boring pieces until I get to something I don't recognize. The particular state within boring is up to FakeTrie to track.
 
+Oh shit, strings can enclude escapes. Fine, deal with it later.
+
+ May 16
+
+Thinking of what is the next step.
+
+Lang Lexer's next step is using java's tokenizer to split words. But is that too much demo? That isn't the way I'm going anyway. Ima nix that. Well otherwise, I'm bound to start taking a list of variables to receive ignorable characters for regexes.
+
+Ah, I found a case where spaces are semantically ambiguous: yaml & ms-dos. They share a capacity to group strings that aren't delimited by quotes. In one sense, that's a small enough exclusion space that I'm not too concerned. On the other, I don't really want to make it too hard to extend this to non-C langs. Well, that's the point of the strategy/algorithm pattern: different use cases get handled by the appropriate strategy. Alright, I'm satisfied that I needn't initialize with some information about whitespace.
+
+Summing up, Lang Lexer ought to get more serious about a particular language, rather than use more demos.
+
+LitmusFrame says it should send an html page. I'm inclined to do so, as that should be a couple minutes. It will look less pretty in the output, but that's temporary.
+
+ May 22
+
+Tried a whitespace lang, as embodied in SyntaxPDautoma. Screwed this up, as nothing is getting colored and not breaking along whitespace lines. The problem is almost certainly the hack in choosing when to split a symbol: on any state transition, where the reality is only transitions from final states are relevant (even if it only occupies it for the single character).
+
+As I broke it, this is the path to pursue. Then it can serve as a template for reading sets of operators and keywords. Those, however, ought to wait until I've pulled some of the framework upward a step. Litmus needs to split this and LFrame/Transmix need to move to java.nio.path . I'm not sure if this should accommodate both path and filepath? I don't have any audience - not even myself for now - so there's no point in giving backwards compatibility to people who haven't updated their jvm. After that, I should reinvestigate bislice and then I can tool around with adding comment spans to sPDa's state machine.
+
+
+
 
 
 

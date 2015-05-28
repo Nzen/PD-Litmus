@@ -5,15 +5,11 @@ import java.util.LinkedList;
 
 /**
  * @author Nzen
- */
-public class LangLexer implements Iterable< TermToken > {
-    /*
     this is a series of regex to determine whether a word is terminal or not
     terminal means string, number, operator, reserved word, comment span, etc
     otherwise, it should be a variable. add environment variables if you don't want to see them
-
-    handle
         if(this.isAwesome(3)){return "I love you";}
+        __(____.isAwesome(_)){______ "__________";} < punctuation left for visual
 
     span pairs : "" /_* *_/ // \n
     all white space?
@@ -21,22 +17,23 @@ public class LangLexer implements Iterable< TermToken > {
     reserved words
     - I could read a json for these
     > fsm states: unsure | span | boring | var
-
+ */
+public class LangLexer implements Iterable< TermToken > {
+    /*
      * todo:
-    X? move lexing into the langLexer from the lexanalysis iterator
-    use hard regex for java & syntax parsing
+    use hard regex for "english" (whitespace), comments, numbers, spans
     use a config file to select/construct regex
+    handle escaped span chars
     make a parser strategy for each supported language
     */
-    private String code; // FIX to an array or list of termtokens
     private LinkedList<TermToken> tokenStream;
     private final String targetLang;
-    private final String[] lexable;
+    private final String[] lexable; // languages
 
     public LangLexer( String ebnf ) {
         targetLang = ebnf;
         // If I get something I don't understand, just
-        lexable = new String[] { "threeChar", "" }; // or use config
+        lexable = new String[] { "words", "threeChar", "" }; // or use config
     }
 
     public String amFor() { return targetLang; }
@@ -52,27 +49,32 @@ public class LangLexer implements Iterable< TermToken > {
     }
 
     // this is also how to restart it
-    public boolean prep( String codeBlock ) {
-        // if ebnf is null return false
-        code = codeBlock;
+    public void prep( String codeBlock ) {
 
         tokenStream = new LinkedList<>();
         if ( checkLang() )
-            return deferTo( codeBlock );
+            deferTo( codeBlock );
         else
-            return noColorAtAll( codeBlock );
+            noColorAtAll( codeBlock );
     }
 
-    private boolean deferTo( String codeBlock ) { // IMPROVE rename?
+    private void deferTo( String codeBlock ) { // IMPROVE rename?
         switch( targetLang ) {
         default:
         case "": {
             noColorAtAll( codeBlock );
          } case "threeChar" : {
              everyThreeCharAlternating( codeBlock );
+         } case "words": {
+             replicatesStrTokenizer( codeBlock );
          }
         }
-        return true; // UNREADY
+    }
+
+    /* just splits along spaces */
+    private void replicatesStrTokenizer( String codeBlock ) {
+        SyntaxPDautoma rstok = new SyntaxPDautoma();
+        tokenStream = rstok.lex(codeBlock);
     }
 
     // 4TESTS replace this with the lexing. this just does whatever for mvp
@@ -93,12 +95,11 @@ public class LangLexer implements Iterable< TermToken > {
     }
 
     /*doesn't color anything. called for missing / unrecognized languages*/
-    public boolean noColorAtAll( String codeBlock ) {
+    public void noColorAtAll( String codeBlock ) {
         tokenStream.add(
             new TermToken(
                 codeBlock, TermToken.literal
         )   );
-        return true; // yeah, worked, whatever
     }
 
     @Override

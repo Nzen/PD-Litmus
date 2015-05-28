@@ -2,6 +2,17 @@
  */
 
 package nzen.petrol;
+/* is this only for html or java too?
+    start with a verboten color instead?
+    starting with minVP
+
+    yeah, give it a background color, eventually 7_7
+    test this internally.
+
+ * todo:
+finish download/code/bislice.py to walk the rgb
+find matrix transform btwx ciexyz/lab & rgb
+*/
 
 /**
  * @author Nzen
@@ -11,7 +22,7 @@ public class ColorSpace {
     private int done;
     private int[] lastColor;
     public static final boolean beginBlack = true;
-    private int rr = 0, gg = 1, bb = 2;
+    final private int rr = 0, gg = 1, bb = 2;
 
     public ColorSpace() {
         this( ColorSpace.beginBlack );
@@ -26,27 +37,28 @@ public class ColorSpace {
         }
     }
 
-    /* is this only for html or java too?
-        start with a verboten color instead?
-        starting with minVP
-
-        yeah, give it a background color, eventually 7_7
-        test this internally.
-
-     * todo:
-    finish download/code/bislice.py to walk the rgb
-    find matrix transform btwx ciexyz/lab & rgb
-    */
-
     /* IMPROVE later change this to some real color walk */
     public String next() {
         done++;
         int indToChange = done % 3;
-        /*if ( lastColor[ indToChange ] < 236 )
-            lastColor[ indToChange ] += 10 + indToChange;
-        else
-            lastColor[ indToChange ] = 2 + indToChange;*/
+        switch( indToChange ) {
+        default:
+        case rr: {
+            lastColor[ rr ] = (int)(Math.sin( done ) *125.0) + 125;
+            break;
+         }
+        case gg: {
+            lastColor[ gg ] = (int)(Math.sin( done +1.57 ) *125.0) + 125;
+            break;
+         }
+        case bb: {
+            lastColor[ bb ] = (int)(Math.sin( done +.785 ) *125.0) + 125;
+            break;
+         }
+        }
 
+        /*
+        int indToChange = done % 3;
         if ( indToChange < 1 ) {
             lastColor[ indToChange ] =
                     (int)(Math.sin( done )*125.0) + 125;
@@ -58,7 +70,8 @@ public class ColorSpace {
             lastColor[ indToChange -1 ] =
                     (int)(Math.sin( done )*125.0) + 125;
         }
-        System.out.println( "CS to "+ strHexOfColor() ); // 4TESTS
+        */
+        // System.out.println( "CS to "+ strHexOfColor() ); // 4TESTS
         return strHexOfColor(); // UNREADY
     }
 
