@@ -21,7 +21,7 @@ import java.util.LinkedList;
 public class LangLexer implements Iterable< TermToken > {
     /*
      * todo:
-    use hard regex for "english" (whitespace), comments, numbers, spans
+    use hard regex for numbers, spans
     use a config file to select/construct regex
     handle escaped span chars
     make a parser strategy for each supported language
@@ -38,37 +38,39 @@ public class LangLexer implements Iterable< TermToken > {
 
     public String amFor() { return targetLang; }
 
-    // to choose the prep strategy
-    public boolean checkLang() {
-        boolean foundIt = true;
-        for ( String lang : lexable ) {
-            if (lang.equals( targetLang ))
-                return foundIt;
-        } // else
-        return ! foundIt;
-    }
-
     // this is also how to restart it
     public void prep( String codeBlock ) {
 
         tokenStream = new LinkedList<>();
-        if ( checkLang() )
-            deferTo( codeBlock );
-        else
-            noColorAtAll( codeBlock );
+        applyLang( codeBlock );
     }
 
-    private void deferTo( String codeBlock ) { // IMPROVE rename?
+    private void applyLang( String codeBlock ) { // IMPROVE rename
         switch( targetLang ) {
         default:
         case "": {
             noColorAtAll( codeBlock );
+            return;
          } case "threeChar" : {
              everyThreeCharAlternating( codeBlock );
+             return;
          } case "words": {
              replicatesStrTokenizer( codeBlock );
+             return;
+         } case "math": {
+             whiteAndOperators( codeBlock );
+             return;
          }
         }
+    }
+
+    // for math
+    private void whiteAndOperators( String codeBlock ) {
+        String[] calculatorSymbols = new String[] {
+            "=", "+", "-", "/", "*", "^", "(", ")"
+        };
+        SyntaxPDautoma wao = new SyntaxPDautoma( calculatorSymbols );
+        tokenStream = wao.lex(codeBlock);
     }
 
     /* just splits along spaces */
@@ -77,7 +79,7 @@ public class LangLexer implements Iterable< TermToken > {
         tokenStream = rstok.lex(codeBlock);
     }
 
-    // 4TESTS replace this with the lexing. this just does whatever for mvp
+    // 4TESTS each 3 chars is alternately a nonterminal
     private void everyThreeCharAlternating( String codeBlock ) {
         for ( int ind = 0; ind < codeBlock.length() -3; ind += 3 ) {
             tokenStream.add(
@@ -98,7 +100,7 @@ public class LangLexer implements Iterable< TermToken > {
     public void noColorAtAll( String codeBlock ) {
         tokenStream.add(
             new TermToken(
-                codeBlock, TermToken.literal
+                codeBlock, TermToken.variable
         )   );
     }
 

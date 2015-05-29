@@ -1,0 +1,117 @@
+<!DOCTYPE html><html language='en'>
+<head><title>Nz : Witteg, Coloring Book</title>
+<style>body{ background-color:lightgrey; }</style></head>
+<body><h2>Coloring Book</h2>
+<p>There's so much to say and I'm very aware of how much won't make it into this post. It will be far short of the platonic ideal of what this post <a href="http://www.radioopensource.org/the-great-american-novel/">Could_Be</a>.</p>
+<p><code lang='threeChar'>
+QWERTYUIOPASDFGHJKLZXCVBMN?ZAQWSXCDERFVBGTYHN*M,KIUJBM
+CVBMN?ZAQWSQWERTYUIOPASDFGHJKLZXCVBMN?ZAQWSXCDERFVBG,
+GTYHN*M,KIUJQWERTYUIOPASDFGHJKLZXCVBMN?ZAQWN*M,KIUJTYK
+SXCDERFVBGTDFGHJKLZXCVBMN?ZAQWSXCDERFVBGTYHN*M,KIUJHN*
+YHQWERTYUIOPASQWERTYUIOPASDFGHJKLZXCVBMN?ZAQWSXCDERFVI</code></p>
+<p>This quarter I've had some <a href="http://www.overclock.net/t/1309881/assembly-mips-32-help-reversing-a-string">assembler homework</a>. That's fine, I've been down here before and accept the limitations of this level. (Ie, don't expect to accomplish much without Dedicating_Yourself_To_It.)</p>
+<p><code lang='words'>
+Class is dead, says Foucault; however, according to Reicher, it is not so much class that is dead,
+but rather the absurdity, and some would say the paradigm, of class.  However, the subject is
+interpolated into a postpatriarchialist dialectic theory that includes consciousness as a totality.</code></p>
+<p>So, I decided that I need a register allocator. Or, more accurately, I need a tool that will serve as a symbol table that will replace variable names with registers. (Mind, to go too far is to implement a buggy, ill documented subset of a C compiler.)</p>
+<p><code lang='math'>
+sin'(x) = sin(pi/2 -x) = cos(x)
+cos'(x) = sin'(pi/2 -(pi/2 -x)) *d/dx(pi/2 -x) = -sin(x)
+d/dx(3x^3 - 2x^2 + x + 1) = 3 *3x^2 -(2 *x^1) +(1 *x^0) +0 = 9x^2 - 2x +1
+&int;(3x3 - 4x2 - x + 7) = 3/4 *x^4 -(4/3 *x^3) -(1/2 *x^2) +(7/1 *1x^1) +(k *x^0) = 3x^4/4 -4x^3/3 -x^2/2 +7x +k
+</code></p>
+<p>Failing the opportunity to beat my square intent into these spherical holes, I've turned to python to let me quickly make an allocator. <a href="https://github.com/Nzen/Naive-Mips-Allocator/tree/py">I put it on</a> github, because github understands polyglot projects.</p>
+<p><code lang='java'>
+private String stripLeadingZeros( String hasZeros ) {
+	int farthest = -1;
+	if ( hasZeros.length() < 1 || hasZeros.charAt( 0 ) != '0' ) {
+		return hasZeros; // blank or no leading zeros
+	} for ( int letter = 1; letter < hasZeros.length(); letter++ ) {
+		if ( hasZeros.charAt( letter ) != '0' ) {
+			farthest = letter;
+			break;
+	}   }
+	if ( farthest < 0 )
+		farthest = hasZeros.length() -1; // if hZ is "000", get last 0
+	return hasZeros.substring( farthest );
+}
+</code></p>
+<p>As usual, it's best to show what I mean. So, first is some code with variable names, and then the intended output. I admit that the comments become a bit unwieldy. If it's obnoxious (or I'm using long names), I'll probably just put it above or below.</p>
+<p><code lang='python'>
+def main() :
+	command = "sdelete.exe "# or "echo " for testing
+	folder_flag = "-r "
+	here = os.getcwd()
+	the_files = "\\*"
+	current = ""
+	for_bash = ""
+	for directory_tuple in os.walk( here, False ) : # top dir, bool:start from bottom
+		current = directory_tuple[0]
+		if current == here :
+			return
+		for_bash = command + '\"' + current + the_files + '\"'
+		os.system( for_bash )
+		for_bash = command + '\"' + current + '\"'
+		os.system( for_bash )
+</code></p>
+<p>Unfortunately, I didn't think to start this project earlier in the quarter. I designed the algorithm to use on Tuesday, but was busy during the week and deferred implementation. It's unfortunate because this tool is the sort of urgently useful thing that would have helped me engage with the material in another class I'm taking, 'symbolic programming.'</p>
+<p><code lang='javascript'>
+function restore_game()
+{
+	termin.log( "I don't restore yet" );
+	var newGrid = bound.deserialize_tiles( document.getElementById("raw").value );
+	if ( newGrid.status === "okay" )
+	{
+		bound.tiles = newGrid.arra;
+		if ( bound.tiles[1][3] === corner.nw ) // unless I put that in parse
+		{
+			document.getElementById("raw").value = "Nice try cheater.";
+			return;
+		}
+		bound.render();
+		// alert("wrustowred"); // :B
+	}
+	else
+		document.getElementById("raw").value = "Nice try cheater.";
+}
+</code></p>
+<p>However, I haven't been practicing with them much and don't feel comfortable enough with the requisite stateful transformations and file i/o. Again, I blame the urgency of my situation. However, during the summer, I'll have a lighter load and intend to revisit this project in their fashion.</p>
+<p><code lang='C++'>
+void main( void )
+{
+	bool doAgain;
+	do
+	{
+		// the program
+		doAgain = getBool( "\nAgain? y/n -- ");
+	}
+	while ( doAgain );
+	return 0;
+}
+/*	void holdScreen( string promptForInput )	----	----	----	----
+	pre: from [ whatever ] , receives a prompt to make the user press enter
+//	----	----	----	----	----	----	----	----*/
+void holdScreen( string promptForInput )
+{
+	cout << promptForInput;
+	cin.ignore( 99,'\n' );
+}
+</code></p>
+<p>Prolog, initially, looked wildly unsuited. I refrained from considering it impossible, because its chapter in "Seven Languages in Seven Weeks" included an interview with a marine biologist who used it to make schedules.</p>
+<p><code lang='mipsASM'>
+  addi $t0, $0, 255 # mask
+  sll $t1, $a1, 3 # shift_n, arg1; 8 * nibble num
+  sllv $t0, $t0, $t1 # mask, mask, shift_n; 1s over specified byte
+  and $t2, $t0, $a0 # har, mask, arg0; extract char
+</code></p>
+<p>I despaired of having it communicate sequence. <span class="comment">Man. I'm supposed to frontload a lot of information to communicate these conclusions. I don't have time. Do I post or not?</span> Recognizing that I wouldn't have time to make a prolog version permitted me to consider the problem from another angle.</p>
+<p><code lang='prolog'>
+  alive(mask, 1, 4). % form of: (symbol, first line, last line)
+  alive(shift_n, 2, 3 ). % this is a comment, by the way
+  assigned( X, t0 ) :- alive( X, 1, Y ), Y is < 5. % a rule
+  > assigned( mask, Prolog_chose ). %= in the interpreter =%
+  >>Prolog_chose = t0.
+</code></p>
+<p>I've not figured out the actual rules to convince prolog to 'change' the constants within facts, if that's even possible. I may not need to, as prolog will probably just show me permutations of possible solutions.</p>
+</body></html>

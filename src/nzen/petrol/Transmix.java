@@ -1,4 +1,4 @@
-/* The project struct for PDistillery
+/* The project struct of PDistillery
  */
 
 package nzen.petrol;
@@ -37,39 +37,39 @@ public class Transmix {
     public Transmix( String fPath, String stuff ) {
         filePath = fPath;
         content = stuff;
-        attributes = new HashMap<String,LinkedList<String>>();
+        attributes = new HashMap<>();
     }
 
-        public String gContent() {
-            return content;
-        }
-        public void sContent( String newText ) {
-            if ( newText == null )
-                newText = "";
-            content = newText;
-        }
-
-        public String gPath() {
-            return filePath;
-        } // IMPROVE nicholas, isn't this supposed to be a forward looking project?
-        // ah yes, I'll get on that. I think it was late last time.
-        public void sPath( String fPath ) {
-            filePath = fPath;
-        }
-
-        public LinkedList get( String attr ) {
-        return attributes.get( attr );
+    public String gContent() {
+        return content;
+    }
+    public void sContent( String newText ) {
+        if ( newText == null )
+            newText = "";
+        content = newText;
     }
 
-        public void set( String attr, LinkedList<String> val ) {
-            attributes.put( attr, val );
-        }
+    public String gPath() {
+        return filePath;
+    } // IMPROVE nicholas, isn't this supposed to be a forward looking project?
+    // ah yes, I'll get on that. I think it was late last time.
+    public void sPath( String fPath ) {
+        filePath = fPath;
+    }
 
-        // sugar, in case I don't feel like it later; ie wrap a single value in a ll
-        public void setWrap( String attr, String val ) {
-            LinkedList<String> wrap = new LinkedList<>();
-            wrap.add( val );
-            set( attr, wrap );
-        }
+    public LinkedList get( String attr ) {
+    return attributes.get( attr );
+    }
+
+    public void set( String attr, LinkedList<String> val ) {
+        attributes.put( attr, val );
+    }
+
+    // sugar, in case I don't feel like it later; ie wrap a single value in a ll
+    public void setWrap( String attr, String val ) {
+        LinkedList<String> wrap = new LinkedList<>();
+        wrap.add( val );
+        set( attr, wrap );
+    }
 
 }

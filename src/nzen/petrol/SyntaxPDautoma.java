@@ -1,26 +1,25 @@
 
 package nzen.petrol;
 
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.HashSet;
 
 /** @author Nzen
  */
 
 /*
  todo
-break by whitespace & pda
+handle multichar operators via pda ( <= += )
 test or print, so I know it works
-take in operator list, apply to pda
+same for number literals
 same for comment pairs
 use keywords too
-
-should this run through the whole thing or work char by char?
-just run through it, no sense in having control straddle two classes
-
 */
 public class SyntaxPDautoma {
     // private String[] operators;
     private LinkedList<TermToken> charStream;
+    private HashSet<String> operators;
     private int lastEnded;
     private int curr;
 
@@ -31,8 +30,7 @@ public class SyntaxPDautoma {
                 return TermToken.variable;
             else
                 return TermToken.literal;
-        }
-    }
+    }   }
     int testToTT() {
         int failed = 0;
         boolean resultType = Token.toTT(Token.variable);
@@ -43,6 +41,13 @@ public class SyntaxPDautoma {
     // for whitespace only
     public SyntaxPDautoma() {
         charStream = new LinkedList<>();
+        operators = null;
+    }
+
+    // for math
+    public SyntaxPDautoma( String[] punctuation ) {
+        charStream = new LinkedList<>();
+        operators = new HashSet<>( Arrays.asList(punctuation) );
     }
 
     /*classifies tokens from codeBlob, char wise*/
@@ -63,12 +68,14 @@ public class SyntaxPDautoma {
             }
             // keep transitioning, as I won't split until oh
         }
-        return charStream; // UNREADY
+        return charStream; // UNREADY fpr real lexing. math lang works
     }
 
     /* initial transition, not useful for three states yet */
     Token transTo( char lett, Token currState ) {
         if ( whiteSpace( lett ) ) {
+            currState = whiteTrans( currState );
+        } else if (operators != null && isOperator( lett )) {
             currState = whiteTrans( currState );
         } else {
             currState = nonWhiteTrans( currState );
@@ -79,6 +86,12 @@ public class SyntaxPDautoma {
     boolean whiteSpace( char lett ) {
         return lett == ' ' || lett == '\t' || lett == '\n' || lett == '\r';
     }
+
+    // NOTE currently assumes that operators are a single letter, a dubious assumption
+    boolean isOperator( char lett ) {
+        return operators.contains( Character.toString(lett) );
+    }
+
     Token whiteTrans( Token curr ) {
         switch( curr ) {
          default:
@@ -87,7 +100,7 @@ public class SyntaxPDautoma {
          case unsure:
             return Token.literal;
     }   }
-    /*ie next char is not whitespace; more meaningful later when real ambiguity*/
+    /*ie next char is not whitespace; more meaningful later, when real ambiguity*/
     Token nonWhiteTrans( Token curr ) {
         switch( curr ) {
          default:
