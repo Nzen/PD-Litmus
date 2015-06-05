@@ -1,9 +1,10 @@
 
-package nzen.petrol;
-
 /** @author Nzen
  * A standalone harness to run Litmus by bundling 'a' file into pd.Transmix
  */
+
+package nzen.petrol;
+
 public class LitmusFrame {
 
     public static void main( String[] args ) {
@@ -49,6 +50,7 @@ public class LitmusFrame {
         return got;
     }
 
+	// PD might work like this :B
     final public void printSpecificFile( java.util.LinkedList<Transmix> postPlugin ) {
         String outFile = "hasCodeResult.html";
         java.nio.file.Path relPath = java.nio.file.Paths.get(outFile);

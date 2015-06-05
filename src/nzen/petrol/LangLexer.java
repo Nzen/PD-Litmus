@@ -1,8 +1,4 @@
 
-package nzen.petrol;
-
-import java.util.LinkedList;
-
 /**
  * @author Nzen
     this is a series of regex to determine whether a word is terminal or not
@@ -17,15 +13,20 @@ import java.util.LinkedList;
     reserved words
     - I could read a json for these
     > fsm states: unsure | span | boring | var
- */
-public class LangLexer implements Iterable< TermToken > {
-    /*
+
      * todo:
     use hard regex for numbers, spans
     use a config file to select/construct regex
     handle escaped span chars
     make a parser strategy for each supported language
-    */
+	(import the pdautoma class) ? split benefit: separates config from work
+*/
+
+package nzen.petrol;
+
+import java.util.LinkedList;
+
+public class LangLexer implements Iterable< TermToken > {
     private LinkedList<TermToken> tokenStream;
     private final String targetLang;
     private final String[] lexable; // languages

@@ -1,16 +1,7 @@
-/* The project struct of PDistillery
- */
-
-package nzen.petrol;
-
-import java.util.HashMap;
-import java.util.LinkedList;
-
 /**
  * @author Nzen
- */
-public class Transmix {
-    /*
+  The project struct of PDistillery
+
     pd will give a ll of Transmix structs to the plugin. order is irrelevant.
     insertion and removal are important.
     searching can be accommodated with smaller groups (ex for templates-posts)
@@ -24,7 +15,14 @@ public class Transmix {
      * todo:
     switch to nio.Path
     (profile the memory use on all this)
-    */
+  */
+
+package nzen.petrol;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+
+public class Transmix {
 
     public String filePath; // IMPROVE use Path instead
     public HashMap<String,LinkedList<String>> attributes;
@@ -51,8 +49,7 @@ public class Transmix {
 
     public String gPath() {
         return filePath;
-    } // IMPROVE nicholas, isn't this supposed to be a forward looking project?
-    // ah yes, I'll get on that. I think it was late last time.
+    } // IMPROVE to java.nio.file.path
     public void sPath( String fPath ) {
         filePath = fPath;
     }
@@ -65,7 +62,7 @@ public class Transmix {
         attributes.put( attr, val );
     }
 
-    // sugar, in case I don't feel like it later; ie wrap a single value in a ll
+    // sugar, in case I don't feel like it later: wrap a single value in a LL
     public void setWrap( String attr, String val ) {
         LinkedList<String> wrap = new LinkedList<>();
         wrap.add( val );

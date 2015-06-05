@@ -93,6 +93,11 @@ def gilette() :
 	rr = low
 	bb = low
 	gr = low
+	# prime the pump to stagger them
+	bb,lue = mandolin(lue)
+	gr,een = mandolin(een)
+	gr,een = mandolin(een)
+	# now run for real
 	while red.containsAnElement() :
 		rr,red = mandolin(red)
 		bb,lue = mandolin(lue)
@@ -121,8 +126,8 @@ def chinked_blade() :
 		raw_input( val )
 
 #run_basic()
-#gilette()
-chinked_blade()
+gilette()
+#chinked_blade()
 """
   breadth first search
 1  procedure BFS(G,v) is

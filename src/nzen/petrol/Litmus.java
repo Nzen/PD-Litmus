@@ -1,16 +1,16 @@
 
+/** @author Nzen
+     * todo:
+    concurrentize stain() by colorBlock() multiple ?
+ */
+
 package nzen.petrol;
 
 import java.util.TreeMap;
 import java.util.LinkedList;
 
-/** @author Nzen
- */
 public class Litmus {
-    /*
-     * todo:
-    concurrentize stain() by colorBlock() multiple ?
-    */
+
     private LangLexer daisyChain;
     private TreeMap< String, String > colorsUsed;
         // unknown number of tags. maybe daisychain can report after lexing?

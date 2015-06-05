@@ -1,14 +1,7 @@
 
-package nzen.petrol;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.HashSet;
-
 /** @author Nzen
- */
+charwise lexes/parses a string via a reductive language into TermTokens
 
-/*
  todo
 handle multichar operators via pda ( <= += )
 test or print, so I know it works
@@ -16,6 +9,12 @@ same for number literals
 same for comment pairs
 use keywords too
 */
+package nzen.petrol;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.HashSet;
+
 public class SyntaxPDautoma {
     // private String[] operators;
     private LinkedList<TermToken> charStream;
