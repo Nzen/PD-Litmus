@@ -75,6 +75,7 @@ public class ColorSpace {
                     continue
                 raw_input( val )
         */
+        return "UNREADY";
     }
 
     /* UNREADY */
@@ -106,33 +107,44 @@ public class ColorSpace {
         return strHexOfColor(); // UNREADY
     }
 
-    /* UNREADY the meaty algorithm */
-    protected bislice( LinkedList< int[] > readiedVals ) {
-        /*
-        # calculates one at a time ; prepend returnVal as export to avoid un/boxing
-        def mandolin( qu ) :
-            # I'll assume client checks qu.containsAnElement() :
-            #qu.pr() # 4TESTS
-            intermed = qu.gFirst()
-            if intermed.start >= intermed.fin :
-                return intermed.fin, qu
-            sta = intermed.start
-            end = intermed.fin
-            dist = end - sta
-            if dist is 1 :
-                qu.sLast( qN(sta, sta) )
-                return end, qu
-            if dist is 2 :
-                qu.sLast( qN(sta, sta) )
-                qu.sLast( qN(end, end) )
-                return sta +1, qu # mid
-            else :
-                mid = dist / 2 + sta
-                qu.sLast( qN(mid +1, end) )
-                qu.sLast( qN(sta, mid -1) )
-                return mid, qu
-        */
+    /* UNREADY the meaty algorithm, one at a time; deque to get two vals out */
+    protected LinkedList bislice( LinkedList< int[] > readiedVals ) {
+        int[] span = readiedVals.poll();
+        if (span[ Ind.low ] >= span[ Ind.high ]) {
+            readiedVals.push( new int[]{span[ Ind.low ]} ); // le sigh, a deque for ease
+            return readiedVals;
+        } // else
+        int low = span[ Ind.low ];
+        int high = span[ Ind.high ];
+        int dist = high - low;
+        if ( dist == 1 ) {
+            readiedVals.add( new int[]{low, low} );
+            readiedVals.push( new int[]{high} );
+        } else if ( dist == 2 ) {
+            readiedVals.add( new int[]{low, low} );
+            readiedVals.add( new int[]{high, high} );
+            readiedVals.push( new int[]{low +1} ); // mid, also avoids division
+        } else {
+            int mid = (Math.round(dist / 2) + low);
+            readiedVals.add( new int[]{mid +1, high} );
+            readiedVals.add( new int[]{low, mid -1} );
+            readiedVals.push( new int[]{mid} );
+        }
+        return readiedVals;
     }
+
+    public void eyeTestBislice() {
+        LinkedList< int[] > dque = new LinkedList<>();
+        int[] shortRun = new int[]{1, 15};
+        dque.add( shortRun );
+        while ( dque.size() > 0 ) {
+            dque = bislice( dque );
+            shortRun = dque.pop(); // yay two return vals
+            System.out.println( "cs.etb() - "+ shortRun[Ind.low] );
+            /*for ( int[] beep : dque ) {
+                System.out.println( " "+ beep[Ind.low] +","+ beep[Ind.high] );
+            }*/
+    }   }
 
     /* IMPROVE later change this to some real color walk; nope just all out replace */
     public String nezt() {
@@ -191,5 +203,10 @@ public class ColorSpace {
             lastColor = new int[] { 252,252,252 };
         }
         done = 0;
+    }
+
+    private class Ind {
+        final static int low = 0;
+        final static int high = low +1;
     }
 }

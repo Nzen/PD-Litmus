@@ -15,7 +15,12 @@ public class LitmusFrame {
         receive test results
         print new file using the altered transmix path
         */
-        LitmusFrame representsPd = new LitmusFrame();
+        boolean production = false;
+        LitmusFrame representsPd;
+        if ( production )
+            representsPd = new LitmusFrame();
+        else
+            representsPd = new LitmusFrame( production );
     }
 
     public LitmusFrame() {
@@ -50,7 +55,7 @@ public class LitmusFrame {
         return got;
     }
 
-	// PD might work like this :B
+    // PD might work like this :B
     final public void printSpecificFile( java.util.LinkedList<Transmix> postPlugin ) {
         String outFile = "hasCodeResult.html";
         java.nio.file.Path relPath = java.nio.file.Paths.get(outFile);
@@ -67,4 +72,18 @@ public class LitmusFrame {
         }
     }
 
+    public LitmusFrame( boolean testing ) {
+        ColorSpace darkBanana = new ColorSpace();
+        darkBanana.eyeTestBislice();
+    }
+
 }
+
+
+
+
+
+
+
+
+
